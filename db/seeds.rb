@@ -44,3 +44,10 @@ end
     puts "Review Created: #{video.reviews.last.text}"
   end
 end
+
+executive = Employee.create(name: "Money Bags")
+manager1 = Employee.create(name: "Manny Manager", manager_id: executive.id)
+manager2 = Employee.create(name: "Manuela Manager", manager_id: executive.id)
+
+employees = [executive, manager1, manager2]
+employees.each {|employee| puts "Employee Created: #{employee.name}"}
