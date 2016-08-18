@@ -53,7 +53,11 @@ employees.each do |employee_data|
     employee.manager_id = Employee.first.id
   end
   employee.save
-  employee.create_employment_history
-
   puts "Employee Created: #{employee.name}"
+
+  employee.create_employment_history
+  puts "Employment History Created"
+
+  employee.employment_history.create_hiring_record(interview_date: Time.now, start_salary: 100000, start_date: 1.week.from_now)
+  puts "Hiring Record Created"
 end
