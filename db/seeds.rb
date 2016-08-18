@@ -45,9 +45,15 @@ end
   end
 end
 
-executive = Employee.create(name: "Money Bags")
-manager1 = Employee.create(name: "Manny Manager", manager_id: executive.id)
-manager2 = Employee.create(name: "Manuela Manager", manager_id: executive.id)
+employees = [{name: "Money Bags", manager: true},{name: "Manny Manager", manager: false},{name: "Manny Manager", manager: false}]
 
-employees = [executive, manager1, manager2]
-employees.each {|employee| puts "Employee Created: #{employee.name}"}
+employees.each do |employee_data|
+  employee = Employee.create(name: employee_data[:name])
+  unless employee_data[:manager]
+    employee.manager_id = Employee.first.id
+  end
+  employee.save
+  employee.create_employment_history
+
+  puts "Employee Created: #{employee.name}"
+end
