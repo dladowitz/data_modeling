@@ -5,4 +5,5 @@ describe Book do
   it { should validate_presence_of :title }
   it { should belong_to :author }
   it { should have_many :chapters }
+  it { should have_many :line_items }
 end
