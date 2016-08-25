@@ -9,8 +9,9 @@
     %th Total
 
   - @orders.each do |order|
-    %td= order.id
-    %td= order.shipping_address
-    %td= order.shipping_date
-    %td= order.line_items.map{ |line_item| line_item.purchasable_type }
-    %td= order.total
+    %tr
+      %td= link_to order.id, order
+      %td= order.shipping_address
+      %td= order.shipping_date.strftime("%b %d, %Y")
+      %td= order.line_items.map{ |line_item| line_item.purchasable_type }
+      %td= number_to_currency(order.total, precision: 0)
