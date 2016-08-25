@@ -1,0 +1,16 @@
+%h1 Orders
+
+%table
+  %tr
+    %th Number
+    %th Address
+    %th Ship Date
+    %th Items
+    %th Total
+
+  - @orders.each do |order|
+    %td= order.id
+    %td= order.shipping_address
+    %td= order.shipping_date
+    %td= order.line_items.map{ |line_item| line_item.purchasable_type }
+    %td= order.total

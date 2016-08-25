@@ -61,3 +61,18 @@ employees.each do |employee_data|
   employee.employment_history.create_hiring_record(interview_date: Time.now, start_salary: 100000, start_date: 1.week.from_now)
   puts "Hiring Record Created"
 end
+
+10.times do
+  order =  Order.create shipping_address: "5000 Main St", shipping_date: 1.week.from_now
+  puts "Order Created: #{order.id}"
+
+  rand(1..3).times do
+    line_item = order.line_items.create(purchasable_type: "Book", purchasable_id: rand(1..Book.count), item_price: rand(100..2000), quantity: rand(1..5))
+    puts "Line Item Created: #{line_item.purchasable_type}"
+  end
+
+  rand(0..3).times do
+    line_item = order.line_items.create(purchasable_type: "Video", purchasable_id: rand(1..Video.count), item_price: rand(100..2000), quantity: rand(1..5))
+    puts "Line Item Created: #{line_item.purchasable_type}"
+  end
+end

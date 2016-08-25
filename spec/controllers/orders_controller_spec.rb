@@ -80,6 +80,5 @@ describe OrdersController do
         expect(flash[:danger]).to eq "That order is not in the database"
       end
     end
-
   end
 end
