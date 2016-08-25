@@ -1,0 +1,26 @@
+%h1 Create an Order
+
+
+= form_for @order do |f|
+  = f.label :shipping_address
+  = f.text_field :shipping_address
+  .item-select
+    %select#line_items{:name => "order[line_items][]"}
+      %option{:value => Book.first.id} #{Book.first.title}
+      %option{:value => Book.second.id} #{Book.second.title}
+      %option{:value => Book.third.id} #{Book.third.title}
+
+  .item-select
+    %select#line_items{:name => "order[line_items][]"}
+      %option{:value => Book.second.id} #{Book.second.title}
+      %option{:value => Book.first.id} #{Book.first.title}
+      %option{:value => Book.third.id} #{Book.third.title}
+
+  -# .item-select
+  -#   %select#line_items{:name => "order[line_items][]"}
+  -#     %option{:value => "{purchasable_id: #{Book.first.id}, purchasable_type: Book, item_price: 10, quantity: 1}"} #{Book.first.title}
+  -#     %option{:value => "{purchasable_id: #{Book.second.id}, purchasable_type: Book, item_price: 10, quantity: 1}"} #{Book.first.title}
+  -#     %option{:value => "{purchasable_id: #{Book.third.id}, purchasable_type: Book, item_price: 10, quantity: 1}"} #{Book.first.title}
+
+  .submit-section
+    = f.submit
