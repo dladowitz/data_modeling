@@ -12,4 +12,9 @@ class Order < ActiveRecord::Base
   def human_ship_date
     shipping_date.strftime("%b %d, %Y")
   end
+
+  def all_item_names
+    item_names = line_items.map{ |line_item| line_item.name_or_title }
+    item_names.join ", "
+  end
 end

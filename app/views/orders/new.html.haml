@@ -6,15 +6,17 @@
   = f.text_field :shipping_address
   .item-select
     %select#line_items{:name => "order[line_items][]"}
-      %option{:value => Book.first.id} #{Book.first.title}
-      %option{:value => Book.second.id} #{Book.second.title}
-      %option{:value => Book.third.id} #{Book.third.title}
-
+      - Book.all.each do |book|
+        %option{:value => book.id} #{book.title}
   .item-select
     %select#line_items{:name => "order[line_items][]"}
-      %option{:value => Book.second.id} #{Book.second.title}
-      %option{:value => Book.first.id} #{Book.first.title}
-      %option{:value => Book.third.id} #{Book.third.title}
+      - Book.all.each do |book|
+        %option{:value => book.id} #{book.title}
+  .item-select
+    %select#line_items{:name => "order[line_items][]"}
+      - Book.all.each do |book|
+        %option{:value => book.id} #{book.title}
+
 
   -# .item-select
   -#   %select#line_items{:name => "order[line_items][]"}
