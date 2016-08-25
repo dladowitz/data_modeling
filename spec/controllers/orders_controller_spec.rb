@@ -29,8 +29,14 @@ describe OrdersController do
     subject { post :create,  order: { shipping_address: "1000 Main St", line_items: [{ purchasable_type: "book", purchasable_id: book.id, item_price: 999, quantity: 2 }, { purchasable_type: "video", purchasable_id: video.id, item_price: 1000, quantity: 1 }] }}
     before { subject }
 
+    it { should redirect_to orders_path }
+
     it "creates a new order in the database" do
       expect(Order.first.shipping_address).to eq "1000 Main St"
+    end
+
+    it "should set a shipping date" do
+      expect(Order.first.shipping_date).to be_within(1.hour).of(2.days.from_now)
     end
 
     it "creates new line items in the database" do
