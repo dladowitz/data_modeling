@@ -13,6 +13,7 @@ describe OrdersController do
          order = Order.create shipping_address: "12345 Main St", shipping_date: 1.week.from_now
          order.line_items.create(purchasable_type: "book", purchasable_id: book.id, item_price: 999, quantity: 2)
        end
+
       subject
     end
 
@@ -46,5 +47,39 @@ describe OrdersController do
     it "associates the line items with the order" do
       expect(LineItem.first.order.shipping_address).to eq "1000 Main St"
     end
+  end
+
+  describe "#show" do
+    let(:order) { Order.create shipping_address: "5000 Main St", shipping_date: 1.week.from_now }
+
+    before do
+     order.line_items.create(purchasable_type: "book", purchasable_id: book.id, item_price: 999, quantity: 2)
+     subject
+    end
+
+    context "when the order is in the database" do
+      subject { get :show, id: order.id }
+
+      it "renders the show template" do
+        expect(response).to render_template :show
+      end
+
+      it "finds the correct order" do
+        expect(assigns(:order).shipping_date).to eq order.shipping_date
+      end
+    end
+
+    context "when the order cannot be found in the database" do
+      subject { get :show, id: "Bad Id" }
+
+      it "renders the index template" do
+        expect(response).to render_template :index
+      end
+
+      it "sets a flash error" do
+        expect(flash[:danger]).to eq "That order is not in the database"
+      end
+    end
+
   end
 end

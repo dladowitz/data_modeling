@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  before_action :set_order, only: :show
+
   def index
     @orders= Order.all
   end
@@ -12,8 +14,16 @@ class OrdersController < ApplicationController
       order.line_items.create(line_item.to_hash)
     end
 
-
     redirect_to orders_path
+  end
+
+  def show
+    if @order
+      render :show
+    else
+      flash[:danger] = "That order is not in the database"
+      render :index
+    end
   end
 
   private
@@ -22,5 +32,7 @@ class OrdersController < ApplicationController
     params.require(:order).permit(:shipping_address)
   end
 
-
+  def set_order
+    @order = Order.find_by_id params[:id]
+  end
 end
