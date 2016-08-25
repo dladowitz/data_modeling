@@ -6,6 +6,10 @@ class Order < ActiveRecord::Base
   validates :shipping_date, :shipping_address, presence: true
 
   def total
-    line_items.inject(0){ |sum, line_item| sum + (line_item.item_price * line_item.quantity) }
+    (line_items.inject(0){ |sum, line_item| sum + (line_item.item_price * line_item.quantity) }) / 100
+  end
+
+  def human_ship_date
+    shipping_date.strftime("%b %d, %Y")
   end
 end

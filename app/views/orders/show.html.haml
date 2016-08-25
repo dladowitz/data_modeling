@@ -1,1 +1,26 @@
-I'm the Show Page
+%h1 Order
+
+%h2
+  %span Ship Date:
+  %span= @order.human_ship_date
+
+%h2
+  %span Address:
+  %span= @order.shipping_address
+
+%h2 Items
+%table
+  %tr
+    %th Name
+    %th Type
+    %th Quantity
+    %th Price
+    %th Total
+
+  - @order.line_items.each do |line_item|
+    %tr
+      %td= line_item.name_or_title
+      %td= line_item.purchasable_type
+      %td= line_item.quantity
+      %td= line_item.item_price
+      %td= number_to_currency(line_item.total, precision: 0)
